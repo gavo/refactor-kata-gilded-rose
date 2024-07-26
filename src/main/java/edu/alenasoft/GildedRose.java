@@ -2,14 +2,17 @@ package edu.alenasoft;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GildedRose {
 
-  public static List<Item> items = null;
+  protected static List<Item> items = new ArrayList<>();
+  private static Logger logger = Logger.getLogger("Main");
 
   public static void main(String[] args) {
 
-    System.out.println("OMGHAI!");
+    logger.log(Level.INFO, "OMGHAI!");
 
     items.add(new Item("+5 Dexterity Vest", 10, 20));
     items.add(new Item("Aged Brie", 2, 0));
@@ -19,8 +22,9 @@ public class GildedRose {
     items.add(new Item("Conjured Mana Cake", 3, 6));
 
     updateQuality();
+    String output = String.valueOf(items);
 
-    System.out.println(items);
+    logger.log(Level.INFO, output);
   }
 
   public static void updateQuality() {

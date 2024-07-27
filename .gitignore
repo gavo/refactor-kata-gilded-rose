@@ -14,3 +14,4 @@ buildNumber.properties
 # IDEA
 *.iml
 .idea
+sonarqube.bat

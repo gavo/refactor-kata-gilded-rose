@@ -10,7 +10,8 @@ El código base presenta las siguientes características
 
 #### 1.2. Comportamiento de los Items
 
-- el item _"Aged Brie"_ y _"Backstage passes"_ incrementa su **quality** a medida que envejece
+- el item _"Aged Brie"_ incrementa su **quality** a medida que envejece
+- el item _"Backstage passes"_ incrementa su **quality** a medida que envejece
   - (**x2** cuando el **sellIn <= 10**)
   - (**x3** cuando el **sellIn <= 5**)
   - (**quality = 0** cuando el **sellIn <= 0**)

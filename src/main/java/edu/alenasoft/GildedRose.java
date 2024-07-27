@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import edu.alenasoft.strategies.BackstageQualityStrategy;
+import edu.alenasoft.strategies.DecreaseQualityStrategy;
+import edu.alenasoft.strategies.IncreaseQualityStrategy;
+import edu.alenasoft.strategies.Strategy;
+
 public class GildedRose {
 
   protected static List<Item> items = new ArrayList<>();
@@ -22,60 +27,26 @@ public class GildedRose {
     items.add(new Item("Conjured Mana Cake", 3, 6));
 
     updateQuality();
-    String output = String.valueOf(items);
 
+    String output = String.valueOf(items);
     logger.log(Level.INFO, output);
   }
 
   public static void updateQuality() {
-    for (int i = 0; i < items.size(); i++) {
-      if ((!"Aged Brie".equals(items.get(i).getName()))
-          && !"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName())) {
-        if (items.get(i).getQuality() > 0 && !"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName())) {
-          items.get(i).setQuality(items.get(i).getQuality() - 1);
-        }
-      } else {
-        if (items.get(i).getQuality() < 50) {
-          items.get(i).setQuality(items.get(i).getQuality() + 1);
+    Strategy incrementStrategy = new IncreaseQualityStrategy(1);
+    Strategy decrementStrategy = new DecreaseQualityStrategy(1);
+    Strategy decrementBy2Strategy = new DecreaseQualityStrategy(2);
+    Strategy backstageStrategy = new BackstageQualityStrategy();
 
-          if ("Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName())) {
-            if (items.get(i).getSellIn() < 11 && items.get(i).getQuality() < 50) {
-              items.get(i).setQuality(items.get(i).getQuality() + 1);
-            }
-
-            if (items.get(i).getSellIn() < 6 && items.get(i).getQuality() < 50) {
-              items.get(i).setQuality(items.get(i).getQuality() + 1);
-            }
-          }
-        }
+    items.forEach(item -> {
+      if (item.getName().toUpperCase().contains("AGED BRIE")) {
+        incrementStrategy.apply(item);
+      } else if (item.getName().toUpperCase().contains("BACKSTAGE")) {
+        backstageStrategy.apply(item);
+      } else if (!item.getName().toUpperCase().contains("SULFURAS")) {
+        decrementStrategy.apply(item);
       }
-
-      if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName())) {
-        items.get(i).setSellIn(items.get(i).getSellIn() - 1);
-      }
-
-      if (items.get(i).getSellIn() < 0) {
-        if (!"Aged Brie".equals(items.get(i).getName())) {
-          if (!"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName())) {
-            if (items.get(i).getQuality() > 0 && !"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName())) {
-              items.get(i).setQuality(items.get(i).getQuality() - 1);
-            }
-          } else {
-            items.get(i).setQuality(0);
-          }
-        } else if (items.get(i).getQuality() < 50) {
-          items.get(i).setQuality(items.get(i).getQuality() + 1);
-        }
-      }
-
-      if (items.get(i).getName().equals("Conjured Mana Cake")) {
-        if (items.get(i).getQuality() > 0) {
-          items.get(i).setQuality(items.get(i).getQuality() - 1);
-          if (items.get(i).getSellIn() < 0) {
-            items.get(i).setQuality(items.get(i).getQuality() - 1);
-          }
-        }
-      }
-    }
+      item.setSellIn(item.getSellIn() - 1);
+    });
   }
 }

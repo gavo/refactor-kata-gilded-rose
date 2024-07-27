@@ -41,6 +41,8 @@ public class GildedRose {
     items.forEach(item -> {
       if (item.getName().toUpperCase().contains("AGED BRIE")) {
         incrementStrategy.apply(item);
+      } else if (item.getName().toUpperCase().contains("CONJURED")) {
+        decrementBy2Strategy.apply(item);
       } else if (item.getName().toUpperCase().contains("BACKSTAGE")) {
         backstageStrategy.apply(item);
       } else if (!item.getName().toUpperCase().contains("SULFURAS")) {

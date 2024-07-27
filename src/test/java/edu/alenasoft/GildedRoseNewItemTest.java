@@ -67,18 +67,18 @@ public class GildedRoseNewItemTest {
     assertEquals(expectedQuality, item.getQuality());
   }
 
-  // @Test
-  // public void testConjuredAlternativeQualityWhenSellInZero() {
-  // // Contexto
-  // GildedRose.items = new ArrayList<>();
-  // int inputQuality = 3;
-  // Item item = new Item("Conjured Mana Cake", 0, inputQuality);
+  @Test
+  public void testConjuredAlternativeQualityWhenSellInZero() {
+    // Contexto
+    GildedRose.items = new ArrayList<>();
+    int inputQuality = 3;
+    Item item = new Item("Conjured Mana Cake", 0, inputQuality);
 
-  // GildedRose.items.add(item);
-  // GildedRose.updateQuality();
+    GildedRose.items.add(item);
+    GildedRose.updateQuality();
 
-  // int expectedQuality = 0;
+    int expectedQuality = 0;
 
-  // assertEquals(expectedQuality, item.getQuality());
-  // }
+    assertEquals(expectedQuality, item.getQuality());
+  }
 }
